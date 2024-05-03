@@ -1,7 +1,3 @@
-variable "ecs_cluster" {}
-
-variable "ecs_service" {}
-
 variable "as_target_min" {
   type    = number
   default = 1

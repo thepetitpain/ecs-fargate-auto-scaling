@@ -2,28 +2,12 @@ output "vpc" {
   value = aws_vpc.vpc
 }
 
-output "load_balancer_subnet_a" {
-  value = aws_subnet.elb_a
+output "vpc_lb_subnets" {
+  value = aws_subnet.elb_subnets
 }
 
-output "load_balancer_subnet_b" {
-  value = aws_subnet.elb_b
-}
-
-output "load_balancer_subnet_c" {
-  value = aws_subnet.elb_c
-}
-
-output "ecs_subnet_a" {
-  value = aws_subnet.ecs_a
-}
-
-output "ecs_subnet_b" {
-  value = aws_subnet.ecs_b
-}
-
-output "ecs_subnet_c" {
-  value = aws_subnet.ecs_c
+output "vpc_ecs_subnets" {
+  value = aws_subnet.ecs_subnets
 }
 
 output "load_balancer_sg" {

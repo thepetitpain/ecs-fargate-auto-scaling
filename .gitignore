@@ -1,3 +1,6 @@
 .idea
 **/.terraform
 terraform/plan
+*.tfvars
+*.tfbackend
+*.lock.hcl

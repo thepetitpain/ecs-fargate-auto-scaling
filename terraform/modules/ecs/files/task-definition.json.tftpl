@@ -1,0 +1,24 @@
+[
+{
+    "portMappings": [
+    {
+        "hostPort": ${port},
+        "protocol": "${protocol}",
+        "containerPort": ${port}
+    }
+    ],
+    "cpu": ${cpu},
+    "environment": [
+      %{for index, variable in env}
+      {
+        "name" : "${variable.name}",
+        "value" : "${variable.value}"
+      }%{if index != length(env)-1},%{endif}
+      %{endfor ~}
+    ],
+    "memory": ${mem},
+    "image": "${image}",
+    "essential": ${isessential},
+    "name": "${name}"
+}
+]

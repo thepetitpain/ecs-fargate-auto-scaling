@@ -1,5 +1,3 @@
-variable "elb" {}
-
 variable "r53_zone" {
   type    = string
   default = "exemple.net"

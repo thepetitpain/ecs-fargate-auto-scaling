@@ -1,11 +1,3 @@
-variable "ecs_target_group" {}
-
-variable "ecs_subnets" {}
-
-variable "ecs_sg" {}
-
-variable "ecs_role" {}
-
 ##### aws_ecs_cluster #####
 ### ecs_cluster ###
 

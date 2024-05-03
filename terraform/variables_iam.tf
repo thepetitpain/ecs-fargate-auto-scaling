@@ -1,4 +1,3 @@
-variable "elb" {}
 
 variable "iam_ecs_svc_name" {
   type    = string
@@ -14,7 +13,7 @@ variable "iam_policy_doc_elb_desc_statement" {
   type = map(list(string))
   default = {
     effect    = ["Allow"]
-    actions   = ["ec2:Describe*"]
+    actions   = ["ec2:Describe"]
     resources = ["*"]
   }
 }
@@ -125,5 +124,5 @@ variable "iam_policy_ecs_scaling_path" {
 
 variable "iam_policy_ecs_scaling_desc" {
   type    = string
-  default = "Allow ecs sclaing"
+  default = "Allow ecs scaling"
 }

@@ -1,24 +1,6 @@
-###### Global ######
-
-variable "global_tags" {
-  type = map(string)
-  default = {
-    Project = "my-project"
-    Billing = "my-project"
-  }
-}
-
-##### From other modules #####
-variable "load_balancer_sg" {}
-
-variable "load_balancer_subnets" {}
-
-variable "vpc" {}
-
-##### aws_route53_zone - data #####
 variable "elb_target_zone" {
   type    = string
-  default = "exemple.net"
+  default = "example.net"
 }
 
 
@@ -29,10 +11,10 @@ variable "elb_cert_target_subdomain" {
 }
 
 variable "elb_cert_validation_method" {
-  type        = string
-  default     = "DNS"
-  description = "Can either be DNS or EMAIL"
+  type    = string
+  default = "DNS"
 }
+
 
 variable "elb_cert_tags" {
   type    = map(string)
