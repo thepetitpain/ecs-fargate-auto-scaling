@@ -9,6 +9,6 @@ resource "aws_ecr_repository" "ecr_registry" {
   encryption_configuration {
     encryption_type = var.encryption_type
   }
-  force_delete = false
+  force_delete = true
   tags         = var.registry_tags
 }

@@ -25,9 +25,14 @@ module "vpc" {
 }
 
 module "elb" {
-  source                    = "./modules/elb"
-  load_balancer_sg          = module.vpc.load_balancer_sg
-  load_balancer_subnets     = module.vpc.vpc_lb_subnets
+  source                = "./modules/elb"
+  load_balancer_sg      = module.vpc.load_balancer_sg
+  load_balancer_subnets = module.vpc.vpc_lb_subnets
+}
+
+module "elb-target" {
+  source                    = "./modules/elb-target"
+  elb                       = module.elb.elb
   vpc                       = module.vpc.vpc
   elb_target_zone           = var.elb_target_zone
   elb_cert_target_subdomain = var.elb_cert_target_subdomain
@@ -64,7 +69,7 @@ module "ecs-services" {
   ecs_role                   = module.iam.ecs_role
   ecs_sg                     = module.vpc.ecs_sg
   ecs_subnets                = module.vpc.vpc_ecs_subnets
-  ecs_target_group           = module.elb.ecs_target_group
+  ecs_target_group           = module.elb-target.ecs_target_group
   ecs_td_definition          = var.ecs_td_definition
   ecs_td_definition_port     = var.ecs_td_definition_port
   ecs_td_definition_env      = var.ecs_td_definition_env
