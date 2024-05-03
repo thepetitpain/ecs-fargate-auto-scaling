@@ -4,3 +4,7 @@ terraform/plan
 *.tfvars
 *.tfbackend
 *.lock.hcl
+
+#Designed to still keep exemple files of ignored templates
+!exemple.tfvars
+!exemple.tfbackend
