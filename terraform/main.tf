@@ -52,14 +52,19 @@ module "ecr" {
 }
 
 module "ecs" {
-  source                     = "./modules/ecs"
+  source              = "./modules/ecs"
+  ecs_name            = var.ecs_name
+  ecs_enable_insights = var.ecs_enable_insights
+  ecs_tags            = var.ecs_tags
+}
+
+module "ecs-services" {
+  source                     = "./modules/ecs-services"
+  ecs_cluster                = module.ecs.ecs_cluster
   ecs_role                   = module.iam.ecs_role
   ecs_sg                     = module.vpc.ecs_sg
   ecs_subnets                = module.vpc.vpc_ecs_subnets
   ecs_target_group           = module.elb.ecs_target_group
-  ecs_name                   = var.ecs_name
-  ecs_enable_insights        = var.ecs_enable_insights
-  ecs_tags                   = var.ecs_tags
   ecs_td_definition          = var.ecs_td_definition
   ecs_td_definition_port     = var.ecs_td_definition_port
   ecs_td_definition_env      = var.ecs_td_definition_env
@@ -77,7 +82,7 @@ module "ecs" {
 module "auto_scaling" {
   source          = "./modules/auto-scaling"
   ecs_cluster     = module.ecs.ecs_cluster
-  ecs_service     = module.ecs.ecs_service
+  ecs_service     = module.ecs-services.ecs_service
   as_target_min   = var.as_target_min
   as_target_max   = var.as_target_max
   ecs_as_policies = var.ecs_as_policies
