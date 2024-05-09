@@ -18,6 +18,18 @@ data "aws_iam_policy_document" "ecs_service_elb" {
   }
 }
 
+# data "aws_iam_policy" "ecs_service_ecr" {
+#   arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+
+#   # statement {
+#   #   effect = local.iam_policy_doc_ecs_ecr.effect[0]
+
+#   #   actions = local.iam_policy_doc_ecs_ecr.actions
+
+#   #   resources = local.iam_policy_doc_ecs_ecr.resources
+#   # }
+# }
+
 data "aws_iam_policy_document" "ecs_service_standard" {
 
   statement {

@@ -12,6 +12,14 @@ resource "aws_iam_policy" "ecs_service_elb" {
   policy = data.aws_iam_policy_document.ecs_service_elb.json
 }
 
+# resource "aws_iam_policy" "ecs_service_ecr" {
+#   name        = var.iam_policy_ecr_name
+#   path        = var.iam_policy_ecr_path
+#   description = var.iam_policy_ecr_desc
+
+#   policy = data.aws_iam_policy_document.ecs_service_ecr.json
+# }
+
 resource "aws_iam_policy" "ecs_service_standard" {
   name        = var.iam_policy_ecs_std_name
   path        = var.iam_policy_ecs_std_path
@@ -26,6 +34,11 @@ resource "aws_iam_policy" "ecs_service_scaling" {
   description = var.iam_policy_ecs_scaling_desc
 
   policy = data.aws_iam_policy_document.ecs_service_scaling.json
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_service_ecr" {
+  role = aws_iam_role.ecs_service.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_service_elb" {

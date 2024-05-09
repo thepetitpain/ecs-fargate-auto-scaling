@@ -1,5 +1,7 @@
 variable "elb" {}
 
+variable "ecr" {}
+
 variable "iam_ecs_svc_name" {
   type    = string
   default = "my-ecs-service-role"
@@ -96,6 +98,21 @@ variable "iam_policy_elb_path" {
 variable "iam_policy_elb_desc" {
   type    = string
   default = "Allow access to the service elb"
+}
+
+variable "iam_policy_ecr_name" {
+  type    = string
+  default = "my-ecs-pull-from-ecr-policy"
+}
+
+variable "iam_policy_ecr_path" {
+  type    = string
+  default = "/"
+}
+
+variable "iam_policy_ecr_desc" {
+  type    = string
+  default = "Allow access to designated ecr repository to pull images from"
 }
 
 variable "iam_policy_ecs_std_name" {

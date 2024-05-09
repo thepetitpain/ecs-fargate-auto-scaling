@@ -38,22 +38,23 @@ module "elb-target" {
   elb_cert_target_subdomain = var.elb_cert_target_subdomain
 }
 
-module "iam" {
-  source                      = "./modules/iam"
-  elb                         = module.elb.elb
-  iam_ecs_svc_name            = var.iam_ecs_svc_name
-  iam_ecs_svc_role_policy     = file("${path.root}${var.iam_ecs_svc_role_policy}")
-  iam_policy_elb_name         = var.iam_policy_elb_name
-  iam_policy_ecs_std_name     = var.iam_policy_ecs_std_name
-  iam_policy_ecs_scaling_name = var.iam_policy_ecs_scaling_name
-}
-
 module "ecr" {
   source          = "./modules/ecr"
   registry_name   = var.registry_name
   is_mutable      = var.is_mutable
   encryption_type = var.encryption_type
   registry_tags   = var.registry_tags
+}
+
+module "iam" {
+  source                      = "./modules/iam"
+  elb                         = module.elb.elb
+  ecr                         = module.ecr.ecr_registry
+  iam_ecs_svc_name            = var.iam_ecs_svc_name
+  iam_ecs_svc_role_policy     = local.iam_policy_ecs_from_ecr #file("${path.root}${var.iam_ecs_svc_role_policy}")
+  iam_policy_elb_name         = var.iam_policy_elb_name
+  iam_policy_ecs_std_name     = var.iam_policy_ecs_std_name
+  iam_policy_ecs_scaling_name = var.iam_policy_ecs_scaling_name
 }
 
 module "ecs" {
@@ -64,24 +65,24 @@ module "ecs" {
 }
 
 module "ecs-services" {
-  source                     = "./modules/ecs-services"
-  ecs_cluster                = module.ecs.ecs_cluster
-  ecs_role                   = module.iam.ecs_role
-  ecs_sg                     = module.vpc.ecs_sg
-  ecs_subnets                = module.vpc.vpc_ecs_subnets
-  ecs_target_group           = module.elb-target.ecs_target_group
-  ecs_td_definition          = local.ecs_service_td
+  source            = "./modules/ecs-services"
+  ecs_cluster       = module.ecs.ecs_cluster
+  ecs_role          = module.iam.ecs_role
+  ecs_sg            = module.vpc.ecs_sg
+  ecs_subnets       = module.vpc.vpc_ecs_subnets
+  ecs_target_group  = module.elb-target.ecs_target_group
+  ecs_td_definition = local.ecs_service_td
   # ecs_td_definition_port     = var.ecs_td_definition_port
   # ecs_td_definition_env      = var.ecs_td_definition_env
   # ecs_td_isessential         = var.ecs_td_isessential
   # ecs_td_definition_protocol = var.ecs_td_definition_protocol
   # ecs_td_definition_image    = var.ecs_td_definition_image
-  ecs_td_cpu                 = var.ecs_td_cpu
-  ecs_td_mem                 = var.ecs_td_mem
-  svc_desired_count          = var.svc_desired_count
-  enable_public_ip           = var.enable_public_ip
-  container_svc_name         = var.container_svc_name
-  container_svc_port         = var.container_svc_port
+  ecs_td_cpu         = var.ecs_td_cpu
+  ecs_td_mem         = var.ecs_td_mem
+  svc_desired_count  = var.svc_desired_count
+  enable_public_ip   = var.enable_public_ip
+  container_svc_name = var.container_svc_name
+  container_svc_port = var.container_svc_port
 }
 
 module "auto_scaling" {

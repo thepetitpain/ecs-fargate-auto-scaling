@@ -12,4 +12,8 @@ locals {
       "isessential" = var.ecs_td_isessential
     }
   )
+  iam_policy_ecs_from_ecr = templatefile(
+    "${path.root}/files/iam/iam-ecs-svc-role.json.tftpl",
+    {}
+  )
 }
