@@ -28,6 +28,8 @@ module "elb" {
   source                = "./modules/elb"
   load_balancer_sg      = module.vpc.load_balancer_sg
   load_balancer_subnets = module.vpc.vpc_lb_subnets
+  elb_lb_name = var.elb_lb_name
+  elb_lb_tags = var.elb_lb_tags
 }
 
 module "elb-target" {
@@ -51,7 +53,7 @@ module "iam" {
   elb                         = module.elb.elb
   ecr                         = module.ecr.ecr_registry
   iam_ecs_svc_name            = var.iam_ecs_svc_name
-  iam_ecs_svc_role_policy     = local.iam_policy_ecs_from_ecr #file("${path.root}${var.iam_ecs_svc_role_policy}")
+  iam_ecs_svc_role_policy     = local.iam_policy_ecs_from_ecr
   iam_policy_elb_name         = var.iam_policy_elb_name
   iam_policy_ecs_std_name     = var.iam_policy_ecs_std_name
   iam_policy_ecs_scaling_name = var.iam_policy_ecs_scaling_name
@@ -67,6 +69,7 @@ module "ecs" {
 module "ecs-services" {
   source            = "./modules/ecs-services"
   ecs_cluster       = module.ecs.ecs_cluster
+  ecs_service_name = var.ecs_service_name
   ecs_role          = module.iam.ecs_role
   ecs_sg            = module.vpc.ecs_sg
   ecs_subnets       = module.vpc.vpc_ecs_subnets

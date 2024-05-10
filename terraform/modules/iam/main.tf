@@ -38,7 +38,7 @@ resource "aws_iam_policy" "ecs_service_scaling" {
 
 resource "aws_iam_role_policy_attachment" "ecs_service_ecr" {
   role = aws_iam_role.ecs_service.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  policy_arn = local.ecs_task_policy
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_service_elb" {

@@ -26,7 +26,7 @@ resource "aws_ecs_task_definition" "ecs_td" {
 }
 
 resource "aws_ecs_service" "ecs_service" {
-  name             = "${var.ecs_cluster.name}-service"
+  name             = "${var.ecs_cluster.name}-${var.ecs_service_name}-service"
   cluster          = var.ecs_cluster.id
   task_definition  = aws_ecs_task_definition.ecs_td.arn
   desired_count    = var.svc_desired_count

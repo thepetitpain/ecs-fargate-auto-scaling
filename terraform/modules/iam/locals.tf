@@ -12,4 +12,5 @@ locals {
     ]
     resources = [var.ecr.arn]
   }
+  ecs_task_policy = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }

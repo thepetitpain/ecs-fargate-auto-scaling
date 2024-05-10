@@ -92,6 +92,10 @@ variable "ecs_td_mem" {
 
 ##### aws_ecs_service #####
 ### ecs_service ###
+variable "ecs_service_name" {
+  type = string
+  default = "my-svc"
+}
 
 variable "svc_desired_count" {
   type    = number
